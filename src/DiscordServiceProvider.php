@@ -2,9 +2,9 @@
 
 namespace Plytas\Discord;
 
+use Plytas\Discord\Commands\DiscordCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Plytas\Discord\Commands\DiscordCommand;
 
 class DiscordServiceProvider extends PackageServiceProvider
 {

@@ -2,7 +2,6 @@
 
 namespace Plytas\Discord\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Plytas\Discord\DiscordServiceProvider;
 
