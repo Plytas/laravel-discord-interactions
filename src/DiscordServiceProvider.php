@@ -2,7 +2,7 @@
 
 namespace Plytas\Discord;
 
-use Plytas\Discord\Commands\DiscordCommand;
+use Plytas\Discord\Commands\RegisterCommandsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -13,6 +13,7 @@ class DiscordServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-discord-interactions')
             ->hasConfigFile()
-            ->hasCommand(DiscordCommand::class);
+            ->hasRoute('discord')
+            ->hasCommand(RegisterCommandsCommand::class);
     }
 }

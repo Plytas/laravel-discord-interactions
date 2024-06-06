@@ -1,6 +1,16 @@
 <?php
 
-// config for Plytas/Discord
 return [
+    'application_id' => env('DISCORD_APPLICATION_ID'),
+    'public_key' => env('DISCORD_PUBLIC_KEY'),
+    'bot_token' => env('DISCORD_BOT_TOKEN'),
 
+    'middleware' => [
+        'before' => [
+            //ThrottleRequests::class,
+        ],
+        'after' => [
+
+        ],
+    ],
 ];
