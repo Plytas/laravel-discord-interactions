@@ -5,12 +5,16 @@ return [
     'public_key' => env('DISCORD_PUBLIC_KEY'),
     'bot_token' => env('DISCORD_BOT_TOKEN'),
 
-    'middleware' => [
-        'before' => [
-            //ThrottleRequests::class,
-        ],
-        'after' => [
+    'route' => [
+        'path' => env('DISCORD_ROUTE', '/discord'),
 
+        'middleware' => [
+            'before' => [
+                //ThrottleRequests::class,
+            ],
+            'after' => [
+
+            ],
         ],
     ],
 ];
