@@ -4,10 +4,13 @@ namespace Plytas\Discord;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Plytas\Discord\Data\DiscordApplicationCommand;
+use Plytas\Discord\Data\DiscordChannel;
 use Plytas\Discord\Data\DiscordInteraction;
 use Plytas\Discord\Data\DiscordMessage;
+use Plytas\Discord\Data\DiscordRole;
 use Plytas\Discord\Exceptions\InvalidConfigurationException;
 
 readonly class Discord
@@ -66,5 +69,26 @@ readonly class Discord
     public function updateMessage(string $channelId, string $messageId, DiscordMessage $message): Response
     {
         return $this->client->patch("/channels/{$channelId}/messages/{$messageId}", $message->toArray());
+    }
+
+    public function deleteMessage(string $channelId, string $messageId): Response
+    {
+        return $this->client->delete("/channels/{$channelId}/messages/{$messageId}");
+    }
+
+    /**
+     * @return Collection<int, DiscordChannel>
+     */
+    public function getChannels(string $guildId): Collection
+    {
+        return DiscordChannel::collect($this->client->throw()->get("/guilds/{$guildId}/channels")->collect());
+    }
+
+    /**
+     * @return Collection<int, DiscordRole>
+     */
+    public function getRoles(string $guildId): Collection
+    {
+        return DiscordRole::collect($this->client->throw()->get("/guilds/{$guildId}/roles")->collect());
     }
 }
