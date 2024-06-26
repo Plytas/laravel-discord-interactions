@@ -10,10 +10,10 @@ class DiscordUser extends Data
         public string $id,
         public string $username,
         public string $discriminator,
-        public string $global_name,
-        public string $avatar,
-        public bool $bot = false,
-        public bool $system = false,
+        public ?string $global_name = null,
+        public ?string $avatar = null,
+        public ?bool $bot = false,
+        public ?bool $system = false,
     ) {
     }
 }
