@@ -14,6 +14,5 @@ class DiscordChannel extends Data
         public string $guild_id,
         public ?string $parent_id,
         public int $position,
-    ) {
-    }
+    ) {}
 }

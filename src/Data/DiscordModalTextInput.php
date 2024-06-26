@@ -11,6 +11,5 @@ class DiscordModalTextInput extends Data
         public string $custom_id,
         public string $value,
         public ComponentType $type,
-    ) {
-    }
+    ) {}
 }

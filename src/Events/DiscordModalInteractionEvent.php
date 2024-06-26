@@ -11,6 +11,5 @@ class DiscordModalInteractionEvent
 
     public function __construct(
         public DiscordInteraction $interaction
-    ) {
-    }
+    ) {}
 }

@@ -11,8 +11,7 @@ class DiscordResponse extends Data
     public function __construct(
         public ResponseType $type,
         public Data|Optional $data,
-    ) {
-    }
+    ) {}
 
     public static function pong(): self
     {

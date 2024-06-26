@@ -14,8 +14,7 @@ class DiscordMessageEmbed extends Data
         public int|EmbedColor $color = EmbedColor::Default,
         /** @var Collection<int, DiscordMessageEmbedField> */
         public Collection $fields = new Collection(),
-    ) {
-    }
+    ) {}
 
     public static function new(): self
     {

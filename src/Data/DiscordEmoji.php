@@ -8,8 +8,7 @@ class DiscordEmoji extends Data
 {
     public function __construct(
         public string $name,
-    ) {
-    }
+    ) {}
 
     public static function new(string $name): self
     {
