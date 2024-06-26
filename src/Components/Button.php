@@ -19,8 +19,7 @@ class Button extends Data implements DiscordComponent
         public ?bool $disabled = null,
         public ?string $url = null,
         public ButtonStyle $style = ButtonStyle::Primary,
-    ) {
-    }
+    ) {}
 
     public static function new(): self
     {

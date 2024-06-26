@@ -11,6 +11,5 @@ class DiscordCommandInteractionEvent
 
     public function __construct(
         public DiscordInteraction $interaction
-    ) {
-    }
+    ) {}
 }

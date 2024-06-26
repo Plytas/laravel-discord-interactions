@@ -15,8 +15,7 @@ class DiscordMessage extends Data
         public Collection $embeds = new Collection(),
         /** @var Collection<int, DiscordComponent> */
         public Collection $components = new Collection(),
-    ) {
-    }
+    ) {}
 
     public static function new(): self
     {

@@ -14,6 +14,5 @@ class DiscordUser extends Data
         public ?string $avatar = null,
         public ?bool $bot = false,
         public ?bool $system = false,
-    ) {
-    }
+    ) {}
 }
