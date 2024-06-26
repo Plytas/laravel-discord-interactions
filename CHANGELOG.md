@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-discord-interactions` will be documented in this file.
 
+## 0.3.0 - 2024-06-26
+
+### What's Changed
+
+* Allow nullable user avatar by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/2
+* Added guild support to interactions by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/3
+
+**Full Changelog**: https://github.com/Plytas/laravel-discord-interactions/compare/0.2.0...0.3.0
+
 ## 0.2.0 - 2024-06-17
 
 ### What's Changed
