@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Plytas\Discord\Data\DiscordApplicationCommand;
 use Plytas\Discord\Data\DiscordChannel;
+use Plytas\Discord\Data\DiscordGuild;
 use Plytas\Discord\Data\DiscordInteraction;
 use Plytas\Discord\Data\DiscordMessage;
 use Plytas\Discord\Data\DiscordRole;
@@ -74,6 +75,11 @@ readonly class Discord
     public function deleteMessage(string $channelId, string $messageId): Response
     {
         return $this->client->delete("/channels/{$channelId}/messages/{$messageId}");
+    }
+
+    public function getGuild(string $guildId): DiscordGuild
+    {
+        return DiscordGuild::from($this->client->get("/guilds/{$guildId}")->json());
     }
 
     /**
