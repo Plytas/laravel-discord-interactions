@@ -52,7 +52,7 @@ class DiscordCommandRegistry
                         $subCommandGroupDescription = (new $subCommandGroup)->description();
                     }
 
-                    $subCommandGroups[] = DiscordApplicationCommandOption::new(name: $subGroupName, type: CommandOptionType::SUB_COMMAND_GROUP)
+                    $subCommandGroups[] = DiscordApplicationCommandOption::new(name: $subGroupName, type: ($subCommands === []) ? CommandOptionType::SUB_COMMAND : CommandOptionType::SUB_COMMAND_GROUP)
                         ->setDescription($subCommandGroupDescription)
                         ->setOptions(($subCommands === []) ? null : DiscordApplicationCommandOption::collect(collect($subCommands)));
                 }
