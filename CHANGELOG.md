@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-discord-interactions` will be documented in this file.
 
+## 0.4.0 - 2024-06-28
+
+### What's Changed
+
+* Fixed first level subcommand registration by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/4
+
+**Full Changelog**: https://github.com/Plytas/laravel-discord-interactions/compare/0.3.0...0.4.0
+
 ## 0.3.0 - 2024-06-26
 
 ### What's Changed
