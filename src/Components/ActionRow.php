@@ -14,7 +14,8 @@ class ActionRow extends Data implements DiscordComponent
     public function __construct(
         /** @var Collection<int, DiscordComponent> */
         public Collection $components = new Collection(),
-    ) {}
+    ) {
+    }
 
     public static function new(): self
     {

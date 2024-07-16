@@ -13,7 +13,8 @@ class SelectOption extends Data
         public ?string $description = null,
         public ?DiscordEmoji $emoji = null,
         public ?bool $default = null,
-    ) {}
+    ) {
+    }
 
     public static function new(string $label, string $value): self
     {

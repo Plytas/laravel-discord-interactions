@@ -15,5 +15,6 @@ class DiscordMessageComponent extends Data
          * @var array<int, string>
          */
         public ?array $values,
-    ) {}
+    ) {
+    }
 }

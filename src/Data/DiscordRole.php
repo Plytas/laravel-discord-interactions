@@ -11,7 +11,8 @@ class DiscordRole extends Data
         public string $name,
         public ?string $description,
         public int $color,
-    ) {}
+    ) {
+    }
 
     public function colorToHex(): string
     {

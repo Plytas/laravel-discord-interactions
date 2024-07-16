@@ -14,7 +14,9 @@ class DiscordMessageEmbed extends Data
         public int|EmbedColor $color = EmbedColor::Default,
         /** @var Collection<int, DiscordMessageEmbedField> */
         public Collection $fields = new Collection(),
-    ) {}
+        public ?DiscordMessageEmbedImage $image = null,
+    ) {
+    }
 
     public static function new(): self
     {
@@ -49,6 +51,13 @@ class DiscordMessageEmbed extends Data
         }
 
         $this->fields->push($field);
+
+        return $this;
+    }
+
+    public function setImage(?DiscordMessageEmbedImage $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

@@ -2,4 +2,6 @@
 
 namespace Plytas\Discord\Contracts;
 
-interface DiscordComponent {}
+interface DiscordComponent
+{
+}

@@ -12,5 +12,6 @@ class DiscordModalActionRow extends Data
         public ComponentType $type,
         /** @var Collection<int, DiscordModalTextInput> */
         public Collection $components,
-    ) {}
+    ) {
+    }
 }

@@ -14,7 +14,8 @@ class DiscordModal extends Data
         public string $title,
         /** @var Collection<int, DiscordComponent> */
         public Collection $components = new Collection(),
-    ) {}
+    ) {
+    }
 
     public static function new(string $custom_id, string $title): self
     {

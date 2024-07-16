@@ -37,7 +37,6 @@ readonly class Discord
         $this->client = Http::baseUrl('https://discord.com/api/v10')
             ->withUserAgent("DiscordBot ($appUrl, 1)")
             ->acceptJson()
-            ->asJson()
             ->withToken($botToken, 'Bot');
     }
 
@@ -64,12 +63,32 @@ readonly class Discord
 
     public function createMessage(string $channelId, DiscordMessage $message): Response
     {
-        return $this->client->post("/channels/{$channelId}/messages", $message->toArray());
+        if ($message->isMultipart()) {
+            $this->client->attach('payload_json', $message->toJson());
+
+            foreach ($message->getFiles() as $index => $file) {
+            	$this->client->attach("files[{$index}]", $file->content, $file->filename);
+            }
+
+            return $this->client->post("/channels/{$channelId}/messages");
+        }
+
+        return $this->client->asJson()->post("/channels/{$channelId}/messages", $message->toArray());
     }
 
     public function updateMessage(string $channelId, string $messageId, DiscordMessage $message): Response
     {
-        return $this->client->patch("/channels/{$channelId}/messages/{$messageId}", $message->toArray());
+        if ($message->isMultipart()) {
+            $this->client->attach('payload_json', $message->toJson());
+
+            foreach ($message->getFiles() as $index => $file) {
+            	$this->client->attach("files[{$index}]", $file->content, $file->filename);
+            }
+
+            return $this->client->patch("/channels/{$channelId}/messages/{$messageId}");
+        }
+
+        return $this->client->asJson()->patch("/channels/{$channelId}/messages/{$messageId}", $message->toArray());
     }
 
     public function deleteMessage(string $channelId, string $messageId): Response

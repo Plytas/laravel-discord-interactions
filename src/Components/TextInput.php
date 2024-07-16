@@ -21,7 +21,8 @@ class TextInput extends Data implements DiscordComponent
         public ?int $min_length = null,
         public ?int $max_length = null,
         public TextInputStyle $style = TextInputStyle::Short,
-    ) {}
+    ) {
+    }
 
     public static function new(string $custom_id, string $label): self
     {

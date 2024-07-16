@@ -14,7 +14,8 @@ class DiscordApplicationCommandOption extends Data
         public ?string $description = null,
         /** @var Collection<int, DiscordApplicationCommandOption> */
         public ?Collection $options = null,
-    ) {}
+    ) {
+    }
 
     public static function new(string $name, CommandOptionType $type): self
     {

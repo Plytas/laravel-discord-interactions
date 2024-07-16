@@ -19,7 +19,8 @@ class StringSelect extends Data implements DiscordComponent
         public ?int $min_values = 1,
         public ?int $max_values = 1,
         public ?bool $disabled = false,
-    ) {}
+    ) {
+    }
 
     public static function new(string $custom_id): self
     {
