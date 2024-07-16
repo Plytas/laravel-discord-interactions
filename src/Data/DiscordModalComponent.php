@@ -11,8 +11,7 @@ class DiscordModalComponent extends Data
         public string $custom_id,
         /** @var Collection<int, DiscordModalActionRow> */
         public Collection $components,
-    ) {
-    }
+    ) {}
 
     /**
      * @return Collection<string, DiscordModalTextInput>

@@ -19,8 +19,7 @@ class DiscordMessage extends Data
         public ?array $attachments = null,
         /** @var Collection<int, DiscordMessageFile> */
         private Collection $files = new Collection(),
-    ) {
-    }
+    ) {}
 
     public static function new(): self
     {

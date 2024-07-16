@@ -67,7 +67,7 @@ readonly class Discord
             $this->client->attach('payload_json', $message->toJson());
 
             foreach ($message->getFiles() as $index => $file) {
-            	$this->client->attach("files[{$index}]", $file->content, $file->filename);
+                $this->client->attach("files[{$index}]", $file->content, $file->filename);
             }
 
             return $this->client->post("/channels/{$channelId}/messages");
@@ -82,7 +82,7 @@ readonly class Discord
             $this->client->attach('payload_json', $message->toJson());
 
             foreach ($message->getFiles() as $index => $file) {
-            	$this->client->attach("files[{$index}]", $file->content, $file->filename);
+                $this->client->attach("files[{$index}]", $file->content, $file->filename);
             }
 
             return $this->client->patch("/channels/{$channelId}/messages/{$messageId}");

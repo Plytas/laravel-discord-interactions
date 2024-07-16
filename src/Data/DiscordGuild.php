@@ -10,6 +10,5 @@ class DiscordGuild extends Data
         public string $id,
         public string $name,
         public ?string $icon = null,
-    ) {
-    }
+    ) {}
 }

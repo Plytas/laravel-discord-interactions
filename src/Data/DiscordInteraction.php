@@ -24,8 +24,7 @@ class DiscordInteraction extends Data
         private ?DiscordApplicationCommand $applicationCommand = null,
         private ?DiscordMessageComponent $messageComponent = null,
         private ?DiscordModalComponent $modalComponent = null,
-    ) {
-    }
+    ) {}
 
     public function pong(): DiscordResponse
     {

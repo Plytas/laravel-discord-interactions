@@ -11,6 +11,5 @@ class DiscordMessageEmbedImage extends Data
         public ?string $proxy_url = null,
         public ?int $height = null,
         public ?int $width = null,
-    ) {
-    }
+    ) {}
 }

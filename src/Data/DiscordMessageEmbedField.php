@@ -10,6 +10,5 @@ class DiscordMessageEmbedField extends Data
         public string $name,
         public string $value,
         public bool $inline = false,
-    ) {
-    }
+    ) {}
 }

@@ -15,8 +15,7 @@ class DiscordMessageEmbed extends Data
         /** @var Collection<int, DiscordMessageEmbedField> */
         public Collection $fields = new Collection(),
         public ?DiscordMessageEmbedImage $image = null,
-    ) {
-    }
+    ) {}
 
     public static function new(): self
     {
