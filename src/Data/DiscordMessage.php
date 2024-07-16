@@ -15,7 +15,7 @@ class DiscordMessage extends Data
         public Collection $embeds = new Collection(),
         /** @var Collection<int, DiscordComponent> */
         public Collection $components = new Collection(),
-
+        /** @var array<int, mixed> */
         public ?array $attachments = null,
         /** @var Collection<int, DiscordMessageFile> */
         private Collection $files = new Collection(),
