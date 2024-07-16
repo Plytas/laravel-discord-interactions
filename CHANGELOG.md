@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-discord-interactions` will be documented in this file.
 
+## 0.5.0 - 2024-07-16
+
+### What's Changed
+
+* Implemented ability to add attachments to message by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/6
+
+**Full Changelog**: https://github.com/Plytas/laravel-discord-interactions/compare/0.4.0...0.5.0
+
 ## 0.4.0 - 2024-06-28
 
 ### What's Changed
