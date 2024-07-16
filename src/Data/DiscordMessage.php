@@ -15,6 +15,10 @@ class DiscordMessage extends Data
         public Collection $embeds = new Collection(),
         /** @var Collection<int, DiscordComponent> */
         public Collection $components = new Collection(),
+        /** @var array<int, mixed> */
+        public ?array $attachments = null,
+        /** @var Collection<int, DiscordMessageFile> */
+        private Collection $files = new Collection(),
     ) {}
 
     public static function new(): self
@@ -52,5 +56,32 @@ class DiscordMessage extends Data
         $this->components->push($component);
 
         return $this;
+    }
+
+    public function removeAttachments(): self
+    {
+        $this->attachments = [];
+
+        return $this;
+    }
+
+    public function addFile(DiscordMessageFile $file): self
+    {
+        $this->files->push($file);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DiscordMessageFile>
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function isMultipart(): bool
+    {
+        return $this->files->isNotEmpty();
     }
 }
