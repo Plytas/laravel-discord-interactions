@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-discord-interactions` will be documented in this file.
 
+## 0.5.1 - 2024-07-17
+
+### What's Changed
+
+* Fix message attachment reset by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/7
+
+**Full Changelog**: https://github.com/Plytas/laravel-discord-interactions/compare/0.5.0...0.5.1
+
 ## 0.5.0 - 2024-07-16
 
 ### What's Changed
