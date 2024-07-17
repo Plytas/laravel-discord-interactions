@@ -84,4 +84,15 @@ class DiscordMessage extends Data
     {
         return $this->files->isNotEmpty();
     }
+
+    public function toArray(): array
+    {
+        $array = parent::toArray();
+
+        if ($this->attachments === null) {
+            unset($array['attachments']);
+        }
+
+        return $array;
+    }
 }
