@@ -13,13 +13,13 @@ class DiscordMessageEmbed extends Data
         public ?string $description = null,
         public int|EmbedColor $color = EmbedColor::Default,
         /** @var Collection<int, DiscordMessageEmbedField> */
-        public Collection $fields = new Collection(),
+        public Collection $fields = new Collection,
         public ?DiscordMessageEmbedImage $image = null,
     ) {}
 
     public static function new(): self
     {
-        return new self();
+        return new self;
     }
 
     public function setTitle(string $title): self

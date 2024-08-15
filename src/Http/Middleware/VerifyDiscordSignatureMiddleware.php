@@ -25,7 +25,7 @@ class VerifyDiscordSignatureMiddleware
         $timestamp = $request->header('X-Signature-Timestamp');
 
         if (! $signature || ! $timestamp || ! $this->verify($signature, $timestamp, $request->getContent())) {
-            throw new AuthenticationException();
+            throw new AuthenticationException;
         }
 
         $applicationId = config('discord-interactions.application_id');
@@ -35,7 +35,7 @@ class VerifyDiscordSignatureMiddleware
         }
 
         if (! $request->string('application_id')->exactly($applicationId)) {
-            throw new AuthorizationException();
+            throw new AuthorizationException;
         }
 
         return $next($request);

@@ -98,7 +98,7 @@ readonly class Discord
 
     public function openDirectMessageChannel(string $userId): Response
     {
-        return $this->client->asJson()->post("/users/@me/channels", ['recipient_id' => $userId]);
+        return $this->client->asJson()->post('/users/@me/channels', ['recipient_id' => $userId]);
     }
 
     public function getGuild(string $guildId): DiscordGuild
