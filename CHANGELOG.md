@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-discord-interactions` will be documented in this file.
 
+## 0.6 - 2024-08-15
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.1.0 to 2.2.0 by @dependabot in https://github.com/Plytas/laravel-discord-interactions/pull/5
+* Implemented ability to open DM channel by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/8
+
+### New Contributors
+
+* @dependabot made their first contribution in https://github.com/Plytas/laravel-discord-interactions/pull/5
+
+**Full Changelog**: https://github.com/Plytas/laravel-discord-interactions/compare/0.5.1...0.6
+
 ## 0.5.1 - 2024-07-17
 
 ### What's Changed
