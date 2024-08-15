@@ -14,6 +14,7 @@ class DiscordInteraction extends Data
         public int $version,
         public string $token,
         public ?DiscordMember $member = null,
+        public ?DiscordUser $user = null,
         public ?string $guild_id = null,
         public ?string $channel_id = null,
         /**

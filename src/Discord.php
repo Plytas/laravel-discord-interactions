@@ -96,6 +96,11 @@ readonly class Discord
         return $this->client->delete("/channels/{$channelId}/messages/{$messageId}");
     }
 
+    public function openDirectMessageChannel(string $userId): Response
+    {
+        return $this->client->asJson()->post("/users/@me/channels", ['recipient_id' => $userId]);
+    }
+
     public function getGuild(string $guildId): DiscordGuild
     {
         return DiscordGuild::from($this->client->get("/guilds/{$guildId}")->json());
