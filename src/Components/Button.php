@@ -23,7 +23,7 @@ class Button extends Data implements DiscordComponent
 
     public static function new(): self
     {
-        return new self();
+        return new self;
     }
 
     public function setCustomId(string $customId): self

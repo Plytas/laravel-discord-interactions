@@ -12,18 +12,18 @@ class DiscordMessage extends Data
         public ?string $content = null,
         public int $flags = 0,
         /** @var Collection<int, DiscordMessageEmbed> */
-        public Collection $embeds = new Collection(),
+        public Collection $embeds = new Collection,
         /** @var Collection<int, DiscordComponent> */
-        public Collection $components = new Collection(),
+        public Collection $components = new Collection,
         /** @var array<int, mixed> */
         public ?array $attachments = null,
         /** @var Collection<int, DiscordMessageFile> */
-        private Collection $files = new Collection(),
+        private Collection $files = new Collection,
     ) {}
 
     public static function new(): self
     {
-        return new self();
+        return new self;
     }
 
     public function setContent(string $content): self

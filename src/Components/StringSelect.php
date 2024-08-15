@@ -14,7 +14,7 @@ class StringSelect extends Data implements DiscordComponent
     public function __construct(
         public string $custom_id,
         /** @var Collection<int, SelectOption> */
-        public Collection $options = new Collection(),
+        public Collection $options = new Collection,
         public ?string $placeholder = null,
         public ?int $min_values = 1,
         public ?int $max_values = 1,

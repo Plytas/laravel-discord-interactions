@@ -29,7 +29,7 @@ class DiscordCommandRegistry
 
     public static function new(): self
     {
-        return new self();
+        return new self;
     }
 
     public function register(): void
