@@ -10,7 +10,7 @@ return [
 
         'middleware' => [
             'before' => [
-                //ThrottleRequests::class,
+                // ThrottleRequests::class,
             ],
             'after' => [
 

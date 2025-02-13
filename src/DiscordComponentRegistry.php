@@ -64,7 +64,7 @@ class DiscordComponentRegistry
         $componentHandler = self::$componentHandlers[$componentId] ?? null;
 
         if ($componentHandler === null) {
-            return $interaction->pong(); //Maybe acknowledge the interaction
+            return $interaction->pong(); // Maybe acknowledge the interaction
         }
 
         if (! is_a($componentHandler, DiscordComponentHandler::class, true)) {
