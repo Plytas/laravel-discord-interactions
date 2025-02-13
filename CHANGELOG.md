@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-discord-interactions` will be documented in this file.
 
+## 0.7 - 2025-02-13
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/Plytas/laravel-discord-interactions/pull/9
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/Plytas/laravel-discord-interactions/pull/10
+* Added `getUser()` method by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/11
+
+**Full Changelog**: https://github.com/Plytas/laravel-discord-interactions/compare/0.6...0.7
+
 ## 0.6 - 2024-08-15
 
 ### What's Changed
