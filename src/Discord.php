@@ -12,6 +12,7 @@ use Plytas\Discord\Data\DiscordGuild;
 use Plytas\Discord\Data\DiscordInteraction;
 use Plytas\Discord\Data\DiscordMessage;
 use Plytas\Discord\Data\DiscordRole;
+use Plytas\Discord\Data\DiscordUser;
 use Plytas\Discord\Exceptions\InvalidConfigurationException;
 
 readonly class Discord
@@ -99,6 +100,11 @@ readonly class Discord
     public function openDirectMessageChannel(string $userId): Response
     {
         return $this->client->asJson()->post('/users/@me/channels', ['recipient_id' => $userId]);
+    }
+
+    public function getUser(string $userId): DiscordUser
+    {
+        return DiscordUser::from($this->client->get("/users/{$userId}")->json());
     }
 
     public function getGuild(string $guildId): DiscordGuild
