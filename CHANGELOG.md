@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-discord-interactions` will be documented in this file.
 
+## 0.8 - 2025-02-18
+
+> [!WARNING]
+
+#### Breaking change:
+
+`DiscordInteraction::getApplicationCommand()` will now return an instance of `DiscordInteractionApplicationCommand`.
+
+### What's Changed
+
+* Added `getCommands()` and `deleteCommand()` methods by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/13
+* Added ability to provide command input options by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/14
+
+**Full Changelog**: https://github.com/Plytas/laravel-discord-interactions/compare/0.7...0.8
+
 ## 0.7 - 2025-02-13
 
 ### What's Changed
