@@ -52,6 +52,31 @@ readonly class Discord
         return $this->client->post("/applications/{$applicationId}/commands", $command->toArray());
     }
 
+    /**
+     * @return Collection<int, DiscordApplicationCommand>
+     */
+    public function getCommands(): Collection
+    {
+        $applicationId = config('discord-interactions.application_id');
+
+        if (! is_string($applicationId)) {
+            throw new InvalidConfigurationException('discord-interactions.application_id');
+        }
+
+        return DiscordApplicationCommand::collect($this->client->throw()->get("/applications/{$applicationId}/commands")->collect());
+    }
+
+    public function deleteCommand(string $commandId): Response
+    {
+        $applicationId = config('discord-interactions.application_id');
+
+        if (! is_string($applicationId)) {
+            throw new InvalidConfigurationException('discord-interactions.application_id');
+        }
+
+        return $this->client->throw()->delete("/applications/{$applicationId}/commands/{$commandId}");
+    }
+
     public function updateInteractionMessage(DiscordInteraction $interaction, DiscordMessage $message): Response
     {
         return $this->client->patch("/webhooks/{$interaction->application_id}/{$interaction->token}/messages/@original", $message->toArray());
