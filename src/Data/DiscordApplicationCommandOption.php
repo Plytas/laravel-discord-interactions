@@ -14,6 +14,7 @@ class DiscordApplicationCommandOption extends Data
         public ?string $description = null,
         /** @var Collection<int, DiscordApplicationCommandOption> */
         public ?Collection $options = null,
+        public bool $required = false,
     ) {}
 
     public static function new(string $name, CommandOptionType $type): self
@@ -34,6 +35,13 @@ class DiscordApplicationCommandOption extends Data
     public function setOptions(?Collection $options): self
     {
         $this->options = $options;
+
+        return $this;
+    }
+
+    public function setRequired(bool $required = true): self
+    {
+        $this->required = $required;
 
         return $this;
     }

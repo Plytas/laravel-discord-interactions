@@ -11,6 +11,7 @@ class DiscordApplicationCommand extends Data
     public function __construct(
         public string $name,
         public CommandType $type,
+        public ?string $id = null,
         public ?string $description = null,
         /** @var Collection<int, DiscordApplicationCommandOption> */
         public ?Collection $options = null,
@@ -36,19 +37,5 @@ class DiscordApplicationCommand extends Data
         $this->options = $options;
 
         return $this;
-    }
-
-    public function getCommandStructure(): string
-    {
-        return $this->name.$this->getOptionName($this->options?->first());
-    }
-
-    private function getOptionName(?DiscordApplicationCommandOption $option): string
-    {
-        if (! $option instanceof DiscordApplicationCommandOption) {
-            return '';
-        }
-
-        return '.'.$option->name.$this->getOptionName($option->options?->first());
     }
 }
