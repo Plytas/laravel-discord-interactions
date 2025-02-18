@@ -22,7 +22,7 @@ class DiscordInteraction extends Data
          */
         public ?array $data = [],
 
-        private ?DiscordApplicationCommand $applicationCommand = null,
+        private ?DiscordInteractionApplicationCommand $applicationCommand = null,
         private ?DiscordMessageComponent $messageComponent = null,
         private ?DiscordModalComponent $modalComponent = null,
     ) {}
@@ -47,9 +47,9 @@ class DiscordInteraction extends Data
         return DiscordResponse::showModal($modal);
     }
 
-    public function getApplicationCommand(): DiscordApplicationCommand
+    public function getApplicationCommand(): DiscordInteractionApplicationCommand
     {
-        return $this->applicationCommand ??= DiscordApplicationCommand::from($this->data);
+        return $this->applicationCommand ??= DiscordInteractionApplicationCommand::from($this->data);
     }
 
     public function getMessageComponent(): DiscordMessageComponent

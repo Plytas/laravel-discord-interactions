@@ -5,6 +5,7 @@ namespace Plytas\Discord;
 use Exception;
 use Illuminate\Support\Arr;
 use Plytas\Discord\Contracts\DiscordCommand;
+use Plytas\Discord\Contracts\HasCommandOptions;
 use Plytas\Discord\Data\DiscordApplicationCommand;
 use Plytas\Discord\Data\DiscordApplicationCommandOption;
 use Plytas\Discord\Data\DiscordInteraction;
@@ -37,32 +38,51 @@ class DiscordCommandRegistry
         foreach (self::$commands as $name => $command) {
             $subCommandGroups = [];
             $commandDescription = "$name command";
+            $options = null;
 
             if (is_array($command)) {
                 foreach ($command as $subGroupName => $subCommandGroup) {
                     $subCommands = [];
                     $subCommandGroupDescription = "$subGroupName subcommand group";
+                    $subCommandOptions = null;
 
                     if (is_array($subCommandGroup)) {
                         foreach ($subCommandGroup as $subCommandName => $subCommand) {
+                            $subCommandCommand = new $subCommand;
+
                             $subCommands[] = DiscordApplicationCommandOption::new(name: $subCommandName, type: CommandOptionType::SUB_COMMAND)
-                                ->setDescription((new $subCommand)->description());
+                                ->setDescription($subCommandCommand->description())
+                                ->setOptions($subCommandCommand instanceof HasCommandOptions ? $subCommandCommand->commandOptions() : null);
                         }
+
+                        $subCommandOptions = ($subCommands === []) ? null : DiscordApplicationCommandOption::collect(collect($subCommands));
                     } else {
-                        $subCommandGroupDescription = (new $subCommandGroup)->description();
+                        $subCommandGroupCommand = new $subCommandGroup;
+                        $subCommandGroupDescription = $subCommandGroupCommand->description();
+
+                        if ($subCommandGroupCommand instanceof HasCommandOptions) {
+                            $subCommandOptions = $subCommandGroupCommand->commandOptions();
+                        }
                     }
 
                     $subCommandGroups[] = DiscordApplicationCommandOption::new(name: $subGroupName, type: ($subCommands === []) ? CommandOptionType::SUB_COMMAND : CommandOptionType::SUB_COMMAND_GROUP)
                         ->setDescription($subCommandGroupDescription)
-                        ->setOptions(($subCommands === []) ? null : DiscordApplicationCommandOption::collect(collect($subCommands)));
+                        ->setOptions($subCommandOptions);
                 }
+
+                $options = ($subCommandGroups === []) ? null : DiscordApplicationCommandOption::collect(collect($subCommandGroups));
             } else {
-                $commandDescription = (new $command)->description();
+                $applicationCommand = new $command;
+                $commandDescription = $applicationCommand->description();
+
+                if ($applicationCommand instanceof HasCommandOptions) {
+                    $options = $applicationCommand->commandOptions();
+                }
             }
 
             $commandData = DiscordApplicationCommand::new(name: $name, type: CommandType::ChatInput)
                 ->setDescription($commandDescription)
-                ->setOptions(($subCommandGroups === []) ? null : DiscordApplicationCommandOption::collect(collect($subCommandGroups)));
+                ->setOptions($options);
 
             Discord::createCommand($commandData);
         }
