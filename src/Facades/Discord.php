@@ -15,6 +15,8 @@ use Plytas\Discord\Data\DiscordUser;
 
 /**
  * @method static Response createCommand(DiscordApplicationCommand $command)
+ * @method static Collection<int, DiscordApplicationCommand> getCommands()
+ * @method static Response deleteCommand(string $commandId)
  * @method static Response updateInteractionMessage(DiscordInteraction $interaction, DiscordMessage $message)
  * @method static Response deleteInteractionMessage(DiscordInteraction $interaction)
  * @method static Response createMessage(string $channelId, DiscordMessage $message)
