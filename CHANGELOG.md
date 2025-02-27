@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-discord-interactions` will be documented in this file.
 
+## 0.9 - 2025-02-27
+
+### What's Changed
+
+* Added support for laravel 12 by @Plytas in https://github.com/Plytas/laravel-discord-interactions/pull/15
+
+**Full Changelog**: https://github.com/Plytas/laravel-discord-interactions/compare/0.8...0.9
+
 ## 0.8 - 2025-02-18
 
 > [!WARNING]
