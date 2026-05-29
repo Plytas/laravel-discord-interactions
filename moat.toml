@@ -1,0 +1,9 @@
+[checks]
+# Several workflows must grant `contents: write` to do their job: the
+# changelog updater and PHP code-style fixer commit back to the repo, and
+# the Dependabot auto-merge workflow merges PRs. Moat's check flags any
+# declared write scope (top-level or job-level), so it cannot pass for these
+# legitimate write-needing workflows. We already apply least privilege: each
+# workflow defaults to `contents: read` and grants `contents: write` (and
+# `pull-requests: write` where needed) only on the specific job that requires it.
+repositories_workflow_permissions_are_restricted = "off"
