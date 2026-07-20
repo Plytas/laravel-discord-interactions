@@ -15,6 +15,8 @@ class DiscordMessageEmbed extends Data
         /** @var Collection<int, DiscordMessageEmbedField> */
         public Collection $fields = new Collection,
         public ?DiscordMessageEmbedImage $image = null,
+        public ?DiscordMessageEmbedThumbnail $thumbnail = null,
+        public ?DiscordMessageEmbedAuthor $author = null,
     ) {}
 
     public static function new(): self
@@ -57,6 +59,20 @@ class DiscordMessageEmbed extends Data
     public function setImage(?DiscordMessageEmbedImage $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function setThumbnail(?DiscordMessageEmbedThumbnail $thumbnail): self
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    public function setAuthor(?DiscordMessageEmbedAuthor $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
