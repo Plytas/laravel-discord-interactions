@@ -5,6 +5,7 @@ namespace Plytas\Discord\Data;
 use Illuminate\Support\Collection;
 use Plytas\Discord\Contracts\DiscordComponent;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
 class DiscordMessage extends Data
 {
@@ -17,6 +18,7 @@ class DiscordMessage extends Data
         public Collection $components = new Collection,
         /** @var array<int, mixed> */
         public ?array $attachments = null,
+        public DiscordMessageReference|Optional $message_reference = new Optional,
         /** @var Collection<int, DiscordMessageFile> */
         private Collection $files = new Collection,
     ) {}
@@ -54,6 +56,16 @@ class DiscordMessage extends Data
     public function addComponent(DiscordComponent $component): self
     {
         $this->components->push($component);
+
+        return $this;
+    }
+
+    public function replyTo(string $messageId, bool $failIfNotExists = true): self
+    {
+        $this->message_reference = new DiscordMessageReference(
+            message_id: $messageId,
+            fail_if_not_exists: $failIfNotExists,
+        );
 
         return $this;
     }
