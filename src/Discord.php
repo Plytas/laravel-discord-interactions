@@ -13,6 +13,7 @@ use Plytas\Discord\Data\DiscordInteraction;
 use Plytas\Discord\Data\DiscordMessage;
 use Plytas\Discord\Data\DiscordRole;
 use Plytas\Discord\Data\DiscordUser;
+use Plytas\Discord\Enums\ChannelType;
 use Plytas\Discord\Exceptions\InvalidConfigurationException;
 
 readonly class Discord
@@ -138,11 +139,17 @@ readonly class Discord
     }
 
     /**
+     * Channels with a type that ChannelType does not know are skipped, because Discord adds new channel types over time.
+     *
      * @return Collection<int, DiscordChannel>
      */
     public function getChannels(string $guildId): Collection
     {
-        return DiscordChannel::collect($this->client->throw()->get("/guilds/{$guildId}/channels")->collect());
+        $channels = $this->client->throw()->get("/guilds/{$guildId}/channels")->collect()
+            ->whereInStrict('type', array_column(ChannelType::cases(), 'value'))
+            ->values();
+
+        return DiscordChannel::collect($channels);
     }
 
     /**
