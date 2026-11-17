@@ -1,11 +1,63 @@
-# Laravel (PHP) client that uses Discord HTTP API to create and respond to interactions
+# Laravel Discord Interactions
+
+![Laravel Discord Interactions](https://raw.githubusercontent.com/Plytas/laravel-discord-interactions/main/art/social-preview.png)
+
+**Build Discord bots in Laravel with slash commands, buttons, select menus and modals. Discord sends each interaction to an ordinary Laravel route, so there is no gateway connection and no bot process to keep running.**
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/plytas/laravel-discord-interactions.svg?style=flat-square)](https://packagist.org/packages/plytas/laravel-discord-interactions)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/plytas/laravel-discord-interactions/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/plytas/laravel-discord-interactions/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/plytas/laravel-discord-interactions/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/plytas/laravel-discord-interactions/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/plytas/laravel-discord-interactions.svg?style=flat-square)](https://packagist.org/packages/plytas/laravel-discord-interactions)
 
-Create rich Discord interactions and respond to them using Laravel. Utilizes Discord HTTP webhooks without the need of a long-running process.
+## Quick example
+
+```php
+use Plytas\Discord\Contracts\DiscordCommand;
+use Plytas\Discord\Data\DiscordInteraction;
+use Plytas\Discord\Data\DiscordMessage;
+use Plytas\Discord\Data\DiscordResponse;
+use Plytas\Discord\DiscordCommandRegistry;
+
+class PingCommand implements DiscordCommand
+{
+    public function description(): string
+    {
+        return 'Replies with pong';
+    }
+
+    public function handle(DiscordInteraction $interaction): DiscordResponse
+    {
+        return $interaction->respondWithMessage(DiscordMessage::new()->setContent('Pong!'));
+    }
+}
+
+// In a service provider's boot() method
+DiscordCommandRegistry::setCommands(['ping' => PingCommand::class]);
+```
+
+Run `php artisan discord:register-commands`, and `/ping` is available in your Discord server.
+
+## Why this package?
+
+Most PHP Discord libraries, such as [DiscordPHP](https://github.com/discord-php/DiscordPHP) and [Laracord](https://github.com/laracord/framework), connect to the Discord gateway over a WebSocket. That needs a process that runs all the time and that you must supervise.
+
+This package uses [Discord's HTTP interactions](https://discord.com/developers/docs/interactions/overview#preparing-for-interactions) instead. Discord sends a signed `POST` request to your app for each slash command, button click, select menu choice or modal submit. Your app responds like it does to any other HTTP request.
+
+- **No worker to keep alive.** The bot runs wherever your Laravel app runs: shared hosting, Laravel Forge, Laravel Cloud, Laravel Vapor or other serverless platforms.
+- **It scales like your web app.** Each interaction is one HTTP request.
+- **It is plain Laravel.** Commands and component handlers are small PHP classes, and the interactions endpoint is a normal route with your own middleware.
+
+Use a gateway library if your bot must react to events that are not interactions, such as new messages or members who join a server.
+
+## Features
+
+- Slash commands, with nested subcommands and command options
+- Message components: buttons, string select menus and action rows
+- Modals with text inputs
+- Messages with embeds, files, replies and ephemeral (private) responses
+- Deferred work: respond in less than 3 seconds, then update the message later
+- Discord REST API client with request pooling and automatic rate limit handling
+- Request signature verification for the interactions endpoint
 
 ## Installation
 
