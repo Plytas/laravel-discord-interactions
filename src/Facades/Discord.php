@@ -27,6 +27,7 @@ use Plytas\Discord\Data\DiscordUser;
  * @method static DiscordGuild getGuild(string $guildId)
  * @method static Collection<int, DiscordChannel> getChannels(string $guildId)
  * @method static Collection<int, DiscordRole> getRoles(string $guildId)
+ * @method static array<array-key, mixed> pool(\Closure(\Plytas\Discord\DiscordPool): array<array-key, \Plytas\Discord\Requests\DiscordReadRequest<mixed>> $callback, ?int $concurrency = null)
  *
  * @see \Plytas\Discord\Discord
  */
