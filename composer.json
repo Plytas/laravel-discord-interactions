@@ -1,13 +1,29 @@
 {
     "name": "plytas/laravel-discord-interactions",
-    "description": "Laravel (PHP) client that uses Discord HTTP API to create and respond to interactions",
+    "description": "Build Discord bots in Laravel: slash commands, buttons, select menus and modals over HTTP webhooks. No gateway or long-running process.",
     "keywords": [
         "laravel",
+        "php",
         "discord",
+        "discord-bot",
+        "discord-api",
+        "discord-interactions",
         "interactions",
-        "laravel-discord-interactions"
+        "slash-commands",
+        "application-commands",
+        "buttons",
+        "select-menu",
+        "modals",
+        "webhooks",
+        "serverless",
+        "bot"
     ],
     "homepage": "https://github.com/plytas/laravel-discord-interactions",
+    "support": {
+        "issues": "https://github.com/Plytas/laravel-discord-interactions/issues",
+        "source": "https://github.com/Plytas/laravel-discord-interactions",
+        "docs": "https://github.com/Plytas/laravel-discord-interactions#readme"
+    },
     "license": "MIT",
     "authors": [
         {
