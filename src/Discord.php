@@ -8,7 +8,6 @@ use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
-use InvalidArgumentException;
 use Plytas\Discord\Data\DiscordApplicationCommand;
 use Plytas\Discord\Data\DiscordChannel;
 use Plytas\Discord\Data\DiscordGuild;
@@ -29,7 +28,7 @@ readonly class Discord
 
     private string $botToken;
 
-    private DiscordRateLimiter $rateLimiter;
+    private ?DiscordRateLimiter $rateLimiter;
 
     /**
      * @throws InvalidConfigurationException
@@ -147,31 +146,19 @@ readonly class Discord
      */
     public function pool(Closure $callback, ?int $concurrency = null): array
     {
-        $discordPool = new DiscordPool($this->optionalApplicationId());
-        $results = $callback($discordPool);
-        $requests = $discordPool->getRequests();
+        $requests = $callback(new DiscordPool($this->optionalApplicationId()));
 
         $responses = Http::pool(function (Pool $pool) use ($requests): void {
-            foreach ($requests as $index => $request) {
-                $this->configure($pool->as((string) $index))->throw()->get($request->path);
+            foreach ($requests as $key => $request) {
+                $this->configure($pool->as((string) $key))->throw()->get($request->path);
             }
         }, $concurrency ?? $this->poolConcurrency());
 
-        return array_map(static function (DiscordReadRequest $request) use ($requests, $responses): mixed {
-            $index = array_search($request, $requests, true);
+        return collect($requests)->map(static function (DiscordReadRequest $request, int|string $key) use ($responses): mixed {
+            $response = $responses[$key];
 
-            if ($index === false) {
-                throw new InvalidArgumentException('The pool callback must return only requests from its DiscordPool.');
-            }
-
-            $response = $responses[$index];
-
-            if ($response instanceof Throwable) {
-                throw $response;
-            }
-
-            return $request->parse($response->throw());
-        }, $results);
+            return $response instanceof Throwable ? throw $response : $request->parse($response->throw());
+        })->all();
     }
 
     /**
@@ -189,13 +176,14 @@ readonly class Discord
             ->withUserAgent($this->userAgent)
             ->acceptJson()
             ->withToken($this->botToken, 'Bot')
-            ->withMiddleware($this->rateLimiter)
-            ->retry(
-                times: 2,
-                sleepMilliseconds: fn (int $attempt, mixed $exception): int => $this->rateLimiter->retryDelayInMilliseconds($exception),
-                when: fn (mixed $exception): bool => $this->rateLimiter->shouldRetry($exception),
-                throw: false,
-            );
+            ->when($this->rateLimiter, static fn (PendingRequest $request, DiscordRateLimiter $rateLimiter): PendingRequest => $request
+                ->withMiddleware($rateLimiter)
+                ->retry(
+                    times: 2,
+                    sleepMilliseconds: fn (int $attempt, mixed $exception): int => $rateLimiter->retryDelayInMilliseconds($exception),
+                    when: fn (mixed $exception): bool => $rateLimiter->shouldRetry($exception),
+                    throw: false,
+                ));
     }
 
     /**

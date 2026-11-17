@@ -127,3 +127,16 @@ it('applies the rate limit to pooled requests', function () {
     expect(fn () => Discord::pool(fn (DiscordPool $pool) => [$pool->getChannels('1'), $pool->getRoles('1')]))
         ->toThrow(DiscordRateLimitedException::class);
 });
+
+it('sends every request when the rate limiter is turned off', function () {
+    config(['discord-interactions.rate_limit.enabled' => false]);
+
+    Http::fake([
+        'discord.com/api/v10/channels/1/messages/*' => Http::response([], 204, rateLimitHeaders('bucket-a', 0, 30)),
+    ]);
+
+    Discord::deleteMessage('1', '10');
+    Discord::deleteMessage('1', '11');
+
+    Http::assertSentCount(2);
+});

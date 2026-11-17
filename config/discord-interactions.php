@@ -6,6 +6,10 @@ return [
     'bot_token' => env('DISCORD_BOT_TOKEN'),
 
     'rate_limit' => [
+        // False turns off the rate limiter and the retry of 429 responses, for apps that handle Discord rate limits
+        // themselves.
+        'enabled' => (bool) env('DISCORD_RATE_LIMIT_ENABLED', true),
+
         // The cache store that keeps the Discord rate limit buckets. Use a store that all workers share, for example
         // redis or database. Null uses the default cache store.
         'cache_store' => env('DISCORD_RATE_LIMIT_CACHE_STORE'),

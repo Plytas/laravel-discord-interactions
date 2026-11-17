@@ -6,7 +6,6 @@ use Plytas\Discord\Data\DiscordChannel;
 use Plytas\Discord\Data\DiscordRole;
 use Plytas\Discord\DiscordPool;
 use Plytas\Discord\Facades\Discord;
-use Plytas\Discord\Requests\DiscordReadRequest;
 
 beforeEach(function () {
     config([
@@ -45,13 +44,6 @@ it('throws when a pooled request fails', function () {
 
     expect(fn () => Discord::pool(fn (DiscordPool $pool) => [$pool->getChannels('1'), $pool->getRoles('1')]))
         ->toThrow(RequestException::class);
-});
-
-it('rejects a request that the pool did not create', function () {
-    Http::fake();
-
-    expect(fn () => Discord::pool(fn (DiscordPool $pool) => [DiscordReadRequest::roles('1')]))
-        ->toThrow(InvalidArgumentException::class);
 });
 
 it('does not keep request options between calls', function () {

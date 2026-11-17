@@ -30,6 +30,7 @@ return [
     'bot_token' => env('DISCORD_BOT_TOKEN'),
 
     'rate_limit' => [
+        'enabled' => (bool) env('DISCORD_RATE_LIMIT_ENABLED', true),
         'cache_store' => env('DISCORD_RATE_LIMIT_CACHE_STORE'),
         'max_wait' => (float) env('DISCORD_RATE_LIMIT_MAX_WAIT', 2),
     ],
@@ -330,6 +331,8 @@ The package follows the [Discord rate limits](https://discord.com/developers/doc
 - A `429` response is retried once when its `retry_after` is not longer than `rate_limit.max_wait`.
 
 Set `rate_limit.cache_store` to a cache store that all your workers share, for example `redis` or `database`. With a store that each process keeps for itself, such as `array`, each worker knows only its own requests.
+
+Set `rate_limit.enabled` to `false` when your app handles the Discord rate limits itself. The package then sends every request at once and does not retry `429` responses.
 
 > [!WARNING]
 > Not all components and API features are supported yet. This package started as a personal project and is still in development. If you need a specific feature, feel free to open an issue or a pull request.

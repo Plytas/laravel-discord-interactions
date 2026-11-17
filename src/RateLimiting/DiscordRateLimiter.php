@@ -7,6 +7,7 @@ use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Plytas\Discord\Exceptions\DiscordRateLimitedException;
@@ -34,8 +35,15 @@ final readonly class DiscordRateLimiter
         private float $maxWait,
     ) {}
 
-    public static function fromConfig(): self
+    /**
+     * Returns null when the rate_limit.enabled config is false.
+     */
+    public static function fromConfig(): ?self
     {
+        if (config('discord-interactions.rate_limit.enabled', true) === false) {
+            return null;
+        }
+
         $store = config('discord-interactions.rate_limit.cache_store');
         $maxWait = config('discord-interactions.rate_limit.max_wait', 2);
 
@@ -66,7 +74,7 @@ final readonly class DiscordRateLimiter
             }
 
             return $handler($request, $options)->then(function (ResponseInterface $response) use ($route): ResponseInterface {
-                $this->record($route, $response);
+                $this->record($route, new Response($response));
 
                 return $response;
             });
@@ -126,36 +134,29 @@ final readonly class DiscordRateLimiter
         return $waitSeconds;
     }
 
-    private function record(DiscordRoute $route, ResponseInterface $response): void
+    private function record(DiscordRoute $route, Response $response): void
     {
         $now = $this->now();
-        $bucket = $response->getHeaderLine('X-RateLimit-Bucket');
+        $bucket = $response->header('X-RateLimit-Bucket');
 
         if ($bucket !== '') {
             $this->cache->put($this->routeKey($route), $bucket, self::ROUTE_BUCKET_TTL);
 
-            $remaining = $response->getHeaderLine('X-RateLimit-Remaining');
-            $resetAfter = $response->getHeaderLine('X-RateLimit-Reset-After');
+            $remaining = $response->header('X-RateLimit-Remaining');
+            $resetAfter = $response->header('X-RateLimit-Reset-After');
 
             if (is_numeric($remaining) && is_numeric($resetAfter)) {
                 $this->putBucket($this->bucketKey($bucket, $route), (int) $remaining, $now + (float) $resetAfter, (float) $resetAfter);
             }
         }
 
-        if ($response->getStatusCode() !== 429) {
-            return;
-        }
-
-        $body = json_decode((string) $response->getBody(), true);
-        $retryAfter = is_array($body) && is_numeric($body['retry_after'] ?? null) ? (float) $body['retry_after'] : null;
+        $retryAfter = $this->retryAfterSeconds($response);
 
         if ($retryAfter === null) {
             return;
         }
 
-        $isGlobal = $response->getHeaderLine('X-RateLimit-Global') === 'true' || (is_array($body) && ($body['global'] ?? false) === true);
-
-        if ($isGlobal) {
+        if ($response->header('X-RateLimit-Global') === 'true' || $response->json('global') === true) {
             $this->cache->put($this->globalKey(), $now + $retryAfter, $this->ttl($retryAfter));
         } elseif ($bucket !== '') {
             $this->putBucket($this->bucketKey($bucket, $route), 0, $now + $retryAfter, $retryAfter);
@@ -172,11 +173,15 @@ final readonly class DiscordRateLimiter
 
     private function retryAfter(mixed $exception): ?float
     {
-        if (! $exception instanceof RequestException || $exception->response->status() !== 429) {
-            return null;
-        }
+        return $exception instanceof RequestException ? $this->retryAfterSeconds($exception->response) : null;
+    }
 
-        $retryAfter = $exception->response->json('retry_after');
+    /**
+     * The seconds that a 429 response asks to wait, or null for any other response.
+     */
+    private function retryAfterSeconds(Response $response): ?float
+    {
+        $retryAfter = $response->status() === 429 ? $response->json('retry_after') : null;
 
         return is_numeric($retryAfter) ? (float) $retryAfter : null;
     }
